@@ -1,11 +1,20 @@
 import express, { Express, Request, Response } from 'express'
+import path from 'path'
 import UserRouter from './routers/user'
 import middleware from './middleware'
+import { ServeStaticOptions } from 'serve-static';
 
 const app: Express = express()
 
-const main:Function = ():void => {
+const StaticOptions: ServeStaticOptions = {
+  setHeaders(res: Response) {
+    res.set('Access-Control-Allow-Origin', '*')
+  }
+}
+
+const launch:Function = ():void => {
   middleware(app)
+  app.use(express.static(path.join(__dirname, 'public'), StaticOptions))
   app.get('/', (req: Request, res: Response) => {
     return res.send('hello')
   })
@@ -15,5 +24,5 @@ const main:Function = ():void => {
   })
 }
 
-main()
+launch()
  
