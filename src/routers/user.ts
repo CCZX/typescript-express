@@ -5,5 +5,6 @@ const userController: UserController = new UserController()
 const router: Router = Router()
 
 router.get('/all', userController.all)
+router.get('/find', userController.find)
 
 export default router
